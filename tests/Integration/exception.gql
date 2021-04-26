@@ -1,0 +1,6 @@
+query {
+    exception {
+        id
+        name
+    }
+}

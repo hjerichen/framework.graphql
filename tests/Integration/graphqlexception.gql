@@ -1,0 +1,6 @@
+query {
+    graphqlexception {
+        id
+        name
+    }
+}

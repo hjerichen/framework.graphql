@@ -12,7 +12,9 @@
     "require": {
         "php": "^8.0",
         "ext-json": "*",
-        "hjerichen/framework": "^0.2"
+        "hjerichen/framework": "^0.2.3",
+        "thecodingmachine/graphqlite": "^4.1",
+        "cache/array-adapter": "^1.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
@@ -22,8 +24,8 @@
     },
     "autoload": {
         "psr-4": {
-            "HJerichen\\Framework\\GraphQL\\": "src/",
-            "HJerichen\\Framework\\GraphQL\\Test\\": "tests"
+            "HJerichen\\FrameworkGraphQL\\": "src/",
+            "HJerichen\\FrameworkGraphQL\\Test\\": "tests/"
         }
     }
 }
