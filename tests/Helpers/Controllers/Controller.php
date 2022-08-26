@@ -3,7 +3,7 @@
 namespace HJerichen\FrameworkGraphQL\Test\Helpers\Controllers;
 
 use Exception;
-use HJerichen\FrameworkGraphQL\GraphQLValidationException;
+use HJerichen\FrameworkGraphQL\Exceptions\GraphQLValidationException;
 use HJerichen\FrameworkGraphQL\Test\Helpers\Types\User;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 use TheCodingMachine\GraphQLite\Exceptions\GraphQLException;

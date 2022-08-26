@@ -138,5 +138,8 @@ class ApplicationTest extends TestCase
         $this->configuration
             ->getCustomValue('graphqlite-namespace-controllers')
             ->willReturn('HJerichen\FrameworkGraphQL\Test\Helpers\Controllers');
+        $this->configuration
+            ->getCustomValue('graphqlite-error-handler')
+            ->willReturn(null);
     }
 }
