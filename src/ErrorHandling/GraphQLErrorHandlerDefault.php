@@ -2,7 +2,7 @@
 
 namespace HJerichen\FrameworkGraphQL\ErrorHandling;
 
-use GraphQL\Error\Debug;
+use GraphQL\Error\DebugFlag;
 use GraphQL\Error\Error;
 use GraphQL\Error\FormattedError;
 
@@ -17,7 +17,7 @@ class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
     protected function formatError(Error $error): array
     {
         $formatted = FormattedError::createFromException($error);
-        $formatted = FormattedError::addDebugEntries($formatted, $error, Debug::INCLUDE_DEBUG_MESSAGE);
+        $formatted = FormattedError::addDebugEntries($formatted, $error, DebugFlag::INCLUDE_DEBUG_MESSAGE);
         return $formatted;
     }
 }
