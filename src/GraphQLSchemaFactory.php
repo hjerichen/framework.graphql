@@ -16,7 +16,7 @@ use TheCodingMachine\GraphQLite\SchemaFactory;
 class GraphQLSchemaFactory extends SchemaFactory
 {
     public function __construct(
-        private Configuration $configuration,
+        private readonly Configuration $configuration,
         ObjectFactory $objectFactory
     ) {
         parent::__construct(new ArrayCachePool(), new ClassInstantiatorContainer($objectFactory));

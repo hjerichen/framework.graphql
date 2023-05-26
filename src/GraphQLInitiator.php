@@ -17,8 +17,8 @@ class GraphQLInitiator
 {
 
     public function __construct(
-        private GraphQLErrorHandlerFactory $errorHandlerFactory,
-        private GraphQLSchemaFactory $schemaFactory,
+        private readonly GraphQLErrorHandlerFactory $errorHandlerFactory,
+        private readonly GraphQLSchemaFactory $schemaFactory,
     ) {
     }
 

@@ -28,6 +28,7 @@ class Controller
     #[Query]
     public function exception(): User
     {
+        /** @noinspection ThrowRawExceptionInspection */
         throw new Exception('test');
     }
 

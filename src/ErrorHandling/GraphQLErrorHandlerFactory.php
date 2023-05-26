@@ -9,8 +9,8 @@ use RuntimeException;
 class GraphQLErrorHandlerFactory
 {
     public function __construct(
-        private Configuration $configuration,
-        private ObjectFactory $objectFactory
+        private readonly Configuration $configuration,
+        private readonly ObjectFactory $objectFactory
     ) {
     }
 

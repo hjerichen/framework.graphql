@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnused */
 
 namespace HJerichen\FrameworkGraphQL\Test\Helpers\Types;
 
