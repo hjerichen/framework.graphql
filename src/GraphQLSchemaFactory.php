@@ -32,12 +32,16 @@ class GraphQLSchemaFactory extends SchemaFactory
     protected function getControllerNamespace(): string
     {
         $namespace = $this->configuration->getCustomValue('graphqlite-namespace-controllers');
-        return $namespace ?? throw new RuntimeException('No namespace controllers given.');
+        if (!$namespace) throw new RuntimeException('No namespace for controllers given.');
+        if (!is_string($namespace)) throw new RuntimeException('Namespace for controllers needs to be a string.');
+        return $namespace;
     }
 
     protected function getTypeNamespace(): string
     {
         $namespace = $this->configuration->getCustomValue('graphqlite-namespace-types');
-        return $namespace ?? throw new RuntimeException('No namespace types given.');
+        if (!$namespace) throw new RuntimeException('No namespace for types given.');
+        if (!is_string($namespace)) throw new RuntimeException('Namespace for types needs to be a string.');
+        return $namespace;
     }
 }

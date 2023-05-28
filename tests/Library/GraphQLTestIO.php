@@ -35,6 +35,7 @@ class GraphQLTestIO implements IODevice
     {
         TestCase::assertJson($response->getContent());
 
+        /** @var array $actualGraphQLResponse */
         $actualGraphQLResponse = json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         if ($this->hasNotExpectedError($actualGraphQLResponse)) {
@@ -59,7 +60,7 @@ class GraphQLTestIO implements IODevice
         return $this->request;
     }
 
-    private function hasNotExpectedError($actualGraphQLResponse): bool
+    private function hasNotExpectedError(array $actualGraphQLResponse): bool
     {
         return
             array_key_exists('data', $this->expectedGraphQLResponse) &&

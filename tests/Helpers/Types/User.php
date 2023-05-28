@@ -8,6 +8,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @api
  */
 #[Type]
 class User

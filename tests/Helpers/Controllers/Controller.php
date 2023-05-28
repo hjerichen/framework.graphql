@@ -10,6 +10,7 @@ use TheCodingMachine\GraphQLite\Exceptions\GraphQLException;
 
 /**
  * @author Heiko Jerichen <heiko@jerichen.de>
+ * @api
  */
 class Controller
 {

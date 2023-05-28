@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+/** @noinspection PhpDocMissingThrowsInspection */
+declare(strict_types=1);
 
 namespace HJerichen\FrameworkGraphQL\ErrorHandling;
 
@@ -7,6 +9,14 @@ use GraphQL\Error\Error;
 use GraphQL\Error\FormattedError;
 use TheCodingMachine\GraphQLite\Exceptions\GraphQLException;
 
+/**
+ * @psalm-type SerializableError array{
+ *   message: string,
+ *   locations?: array<int, array{line: int, column: int}>,
+ *   path?: array<int, int|string>,
+ *   extensions?: array<string, mixed>
+ * }
+ */
 class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
 {
     /** @param Error[] $errors */
@@ -14,25 +24,19 @@ class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
         return array_map([$this, 'formatError'], $errors);
     }
 
-    /** @noinspection PhpUnnecessaryLocalVariableInspection */
+    /** @return SerializableError */
     protected function formatError(Error $error): array
     {
         $formatted = FormattedError::createFromException($error);
-        $formatted = $this->appendDebugMessage($error, $formatted);
-        $formatted = $this->appendCategory($error, $formatted);
-        return $formatted;
-    }
-
-    private function appendDebugMessage(Error $error, array $formatted): array
-    {
+        /** @var SerializableError $formatted */
         $formatted = FormattedError::addDebugEntries($formatted, $error, DebugFlag::INCLUDE_DEBUG_MESSAGE);
-        if (isset($formatted['extensions']['debugMessage'])) {
-            $formatted['debugMessage'] = $formatted['extensions']['debugMessage'];
-            unset($formatted['extensions']['debugMessage']);
-        }
-        return $formatted;
+        return $this->appendCategory($error, $formatted);
     }
 
+    /**
+     * @param SerializableError $formatted
+     * @return SerializableError
+     */
     private function appendCategory(Error $error, array $formatted): array
     {
         $exception = $error->getPrevious();

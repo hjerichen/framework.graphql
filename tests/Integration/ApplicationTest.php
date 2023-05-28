@@ -20,7 +20,8 @@ class ApplicationTest extends TestCase
 
     private Application $application;
     private GraphQLTestIO $ioDevice;
-    private ObjectProphecy|Configuration $configuration;
+    /** @var ObjectProphecy<Configuration> */
+    private ObjectProphecy $configuration;
 
     public function setUp(): void
     {
@@ -109,9 +110,9 @@ class ApplicationTest extends TestCase
             'errors' => [
                 [
                     'message' => 'Internal server error',
-                    'debugMessage' => 'test',
                     'extensions' => [
-                        'category' => 'internal'
+                        'category' => 'internal',
+                        'debugMessage' => 'test',
                     ],
                     'locations' => [
                         [

@@ -25,14 +25,17 @@ class GraphQLInitiator
     public function execute(Request $request): Response
     {
         $schema = $this->schemaFactory->createSchema();
+        /** @var array{query: string, variables: array<string,mixed>} $input */
         $input = json_decode($request->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
         $query = $input['query'];
         $variableValues = $input['variables'] ?? null;
 
         $result = GraphQL::executeQuery($schema, $query, null, new Context(), $variableValues);
+        /** @psalm-suppress InvalidArgument */
         $result->setErrorsHandler([$this->createErrorHandler(), 'handleErrors']);
 
+        /** @psalm-suppress UndefinedDocblockClass */
         $output = $result->toArray();
         return new JsonResponse(json_encode($output, JSON_THROW_ON_ERROR));
     }

@@ -21,9 +21,17 @@ class GraphQLErrorHandlerFactory
         throw new RuntimeException("Wrong graphql exception handler class");
     }
 
+    /**
+     * @return class-string
+     * @noinspection PhpRedundantVariableDocTypeInspection
+     */
     private function getHandlerClass(): string
     {
+        /** @var mixed $handlerClass */
         $handlerClass = $this->configuration->getCustomValue('graphqlite-error-handler');
-        return $handlerClass ?? GraphQLErrorHandlerDefault::class;
+        if (!$handlerClass) return GraphQLErrorHandlerDefault::class;
+
+        if (is_string($handlerClass) && class_exists($handlerClass)) return $handlerClass;
+        throw new RuntimeException("Wrong graphql exception handler class");
     }
 }
