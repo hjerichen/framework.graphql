@@ -7,6 +7,8 @@ use HJerichen\Framework\ObjectFactory;
 use HJerichen\FrameworkGraphQL\ErrorHandling\GraphQLErrorHandler;
 use HJerichen\FrameworkGraphQL\ErrorHandling\GraphQLErrorHandlerDefault;
 use HJerichen\FrameworkGraphQL\ErrorHandling\GraphQLErrorHandlerFactory;
+use HJerichen\FrameworkGraphQL\Test\Helpers\ErrorHandler;
+use HJerichen\FrameworkGraphQL\Test\Helpers\Types\User;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -53,9 +55,9 @@ class GraphQLErrorHandlerFactoryTest extends TestCase
     {
         $this->configuration
             ->getCustomValue('graphqlite-error-handler')
-            ->willReturn('SomeClass');
+            ->willReturn(ErrorHandler::class);
         $this->objectFactory
-            ->instantiateClass('SomeClass')
+            ->instantiateClass(ErrorHandler::class)
             ->willReturn($this->exceptionHandler->reveal());
 
         $this->assertSame(
@@ -64,13 +66,25 @@ class GraphQLErrorHandlerFactoryTest extends TestCase
         );
     }
 
-    public function test_createExceptionHandler_forWrongConfiguration(): void
+    public function test_createExceptionHandler_forConfigurationIsNotClass(): void
     {
         $this->configuration
             ->getCustomValue('graphqlite-error-handler')
-            ->willReturn('SomeClass');
+            ->willReturn('SomeString');
+
+        $expected = new RuntimeException("Wrong graphql exception handler class");
+        $this->expectExceptionObject($expected);
+
+        $this->factory->createErrorHandler();
+    }
+
+    public function test_createExceptionHandler_foConfigurationDoesNotImplementsHandler(): void
+    {
+        $this->configuration
+            ->getCustomValue('graphqlite-error-handler')
+            ->willReturn(User::class);
         $this->objectFactory
-            ->instantiateClass('SomeClass')
+            ->instantiateClass(User::class)
             ->willReturn($this->factory);
 
         $expected = new RuntimeException("Wrong graphql exception handler class");
