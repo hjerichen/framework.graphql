@@ -9,6 +9,7 @@ use HJerichen\FrameworkGraphQL\ErrorHandling\GraphQLErrorHandlerDefault;
 use HJerichen\FrameworkGraphQL\ErrorHandling\GraphQLErrorHandlerFactory;
 use HJerichen\FrameworkGraphQL\Test\Helpers\ErrorHandler;
 use HJerichen\FrameworkGraphQL\Test\Helpers\Types\User;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -23,6 +24,7 @@ class GraphQLErrorHandlerFactoryTest extends TestCase
     private ObjectProphecy $objectFactory;
     private ObjectProphecy $configuration;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

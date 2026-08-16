@@ -7,6 +7,7 @@ use HJerichen\Framework\Configuration\Configuration;
 use HJerichen\FrameworkGraphQL\GraphQLRoute;
 use HJerichen\FrameworkGraphQL\Test\Library\GraphQLTestInput;
 use HJerichen\FrameworkGraphQL\Test\Library\GraphQLTestIO;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -23,6 +24,7 @@ class ApplicationTest extends TestCase
     /** @var ObjectProphecy<Configuration> */
     private ObjectProphecy $configuration;
 
+    #[Override]
     public function setUp(): void
     {
         parent::setUp();
@@ -111,7 +113,7 @@ class ApplicationTest extends TestCase
                 [
                     'message' => 'Internal server error',
                     'extensions' => [
-                        'category' => 'internal',
+                        'category' => 'Internal',
                         'debugMessage' => 'test',
                     ],
                     'locations' => [
@@ -134,11 +136,8 @@ class ApplicationTest extends TestCase
     private function setUpConfiguration(): void
     {
         $this->configuration
-            ->getCustomValue('graphqlite-namespace-types')
-            ->willReturn('HJerichen\FrameworkGraphQL\Test\Helpers\Types');
-        $this->configuration
-            ->getCustomValue('graphqlite-namespace-controllers')
-            ->willReturn('HJerichen\FrameworkGraphQL\Test\Helpers\Controllers');
+            ->getCustomValue('graphqlite-namespace')
+            ->willReturn('HJerichen\FrameworkGraphQL\Test\Helpers');
         $this->configuration
             ->getCustomValue('graphqlite-error-handler')
             ->willReturn(null);

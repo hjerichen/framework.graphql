@@ -32,8 +32,8 @@ class GraphQLInitiator
         $variableValues = $input['variables'] ?? null;
 
         $result = GraphQL::executeQuery($schema, $query, null, new Context(), $variableValues);
-        /** @psalm-suppress InvalidArgument */
-        $result->setErrorsHandler([$this->createErrorHandler(), 'handleErrors']);
+        /** @psalm-suppress ArgumentTypeCoercion */
+        $result->setErrorsHandler(errorsHandler: [$this->createErrorHandler(), 'handleErrors']);
 
         /** @psalm-suppress UndefinedDocblockClass */
         $output = $result->toArray();

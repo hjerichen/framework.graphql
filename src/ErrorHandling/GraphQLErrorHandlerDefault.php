@@ -7,6 +7,8 @@ namespace HJerichen\FrameworkGraphQL\ErrorHandling;
 use GraphQL\Error\DebugFlag;
 use GraphQL\Error\Error;
 use GraphQL\Error\FormattedError;
+use HJerichen\FrameworkGraphQL\Exceptions\GraphQLValidationException;
+use Override;
 use TheCodingMachine\GraphQLite\Exceptions\GraphQLException;
 
 /**
@@ -20,6 +22,7 @@ use TheCodingMachine\GraphQLite\Exceptions\GraphQLException;
 class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
 {
     /** @param Error[] $errors */
+    #[Override]
     public function handleErrors(array $errors): array {
         return array_map([$this, 'formatError'], $errors);
     }
@@ -28,7 +31,6 @@ class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
     protected function formatError(Error $error): array
     {
         $formatted = FormattedError::createFromException($error);
-        /** @var SerializableError $formatted */
         $formatted = FormattedError::addDebugEntries($formatted, $error, DebugFlag::INCLUDE_DEBUG_MESSAGE);
         return $this->appendCategory($error, $formatted);
     }
@@ -40,10 +42,12 @@ class GraphQLErrorHandlerDefault implements GraphQLErrorHandler
     private function appendCategory(Error $error, array $formatted): array
     {
         $exception = $error->getPrevious();
-        if ($exception instanceof GraphQLException) {
-            $formatted['extensions']['category'] = $exception->getCategory();
+        if ($exception instanceof GraphQLValidationException) {
+            $formatted['extensions']['category'] = 'Validation';
+        } else if ($exception instanceof GraphQLException) {
+            $formatted['extensions']['category'] = 'Exception';
         } else {
-            $formatted['extensions']['category'] = 'internal';
+            $formatted['extensions']['category'] = 'Internal';
         }
         return $formatted;
     }

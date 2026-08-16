@@ -5,6 +5,7 @@ namespace HJerichen\FrameworkGraphQL\Test\Library;
 use HJerichen\Framework\IODevice\IODevice;
 use HJerichen\Framework\Request\Request;
 use HJerichen\Framework\Response\Response;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,11 +27,13 @@ class GraphQLTestIO implements IODevice
         $this->expectedGraphQLResponse = $expectedGraphQLResponse;
     }
 
+    #[Override]
     public function getRequest(): Request
     {
         return $this->request ?? $this->buildRequest();
     }
 
+    #[Override]
     public function outputResponse(Response $response): void
     {
         TestCase::assertJson($response->getContent());
